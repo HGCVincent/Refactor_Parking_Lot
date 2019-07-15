@@ -6,12 +6,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ParkingLotManager extends ParkingBoy{
-    List<ParkingLot> parkingLots = new ArrayList<>();
+public class ParkingLotManager extends Paker{
     List<ParkingBoy> parkingBoys = new ArrayList<>();
 
     public ParkingLotManager(ParkingLot... parkingLot) {
-        this.parkingLots.addAll(Arrays.asList(parkingLot));
+        super(parkingLot);
     }
 
     public void addParkingBoy(ParkingBoy parkingBoy) {
@@ -20,7 +19,7 @@ public class ParkingLotManager extends ParkingBoy{
 
     public ParkingTicket parkingCar(Car car) {
         for (ParkingBoy parkingBoy : parkingBoys){
-            if (parkingBoy.parkingLots.stream().allMatch(parkingLot -> parkingLot.isFull())){
+            if (parkingBoy.getParkingLots().stream().allMatch(parkingLot -> parkingLot.isFull())){
                throw new NotEnoughPositionException();
             }
             else {
@@ -32,7 +31,7 @@ public class ParkingLotManager extends ParkingBoy{
 
     public Car fetchingCar(ParkingTicket ticket){
         for(ParkingBoy parkingBoy : parkingBoys){
-            if(parkingBoy.parkingLots.stream().anyMatch(parkingLot -> parkingLot.getTiketsAndCar().containsKey(ticket))){
+            if(parkingBoy.getParkingLots().stream().anyMatch(parkingLot -> parkingLot.getTiketsAndCar().containsKey(ticket))){
                 return parkingBoy.fetchCar(ticket);
             }
         }

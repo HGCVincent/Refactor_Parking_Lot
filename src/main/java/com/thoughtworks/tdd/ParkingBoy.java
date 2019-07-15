@@ -5,35 +5,34 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ParkingBoy {
-    List<ParkingLot> parkingLots = new ArrayList<>();
+public class ParkingBoy extends Paker{
 
     public ParkingBoy(ParkingLot... parkingLot){
-        this.parkingLots.addAll(Arrays.asList(parkingLot));
+        super(parkingLot);
     }
 
     public Car fetchCar(ParkingTicket ticket) {
         if (ticket == null){
             throw new MissingParkingTicketException();
-        }else if (!parkingLots.stream().anyMatch(parkingLot -> parkingLot.getTiketsAndCar().containsKey(ticket))){
+        }else if (!getParkingLots().stream().anyMatch(parkingLot -> parkingLot.getTiketsAndCar().containsKey(ticket))){
             throw new UnrecognizedParkingTicketException();
         }
         else {
-            return parkingLots.stream().filter(parkingLot1 -> parkingLot1.getTiketsAndCar().containsKey(ticket)).findFirst().get().fetch(ticket);
+            return getParkingLots().stream().filter(parkingLot1 -> parkingLot1.getTiketsAndCar().containsKey(ticket)).findFirst().get().fetch(ticket);
         }
     }
 
     public ParkingTicket parkCar(Car car) {
-        if (parkingLots.stream().allMatch(parkingLot -> parkingLot.isFull())){
+        if (getParkingLots().stream().allMatch(parkingLot -> parkingLot.isFull())){
             throw new NotEnoughPositionException();
         }
         else {
-            return parkingLots.stream().filter(parkingLot1 -> !parkingLot1.isFull()).findFirst().get().park(car);
+            return getParkingLots().stream().filter(parkingLot1 -> !parkingLot1.isFull()).findFirst().get().park(car);
         }
     }
 
     public void addParkingLot(ParkingLot parkingLot) {
-        this.parkingLots.add(parkingLot);
+        this.getParkingLots().add(parkingLot);
     }
 
 }
