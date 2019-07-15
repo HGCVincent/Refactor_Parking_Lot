@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class SmartParkingBoy extends Paker {
+public class SmartParkingBoy extends Paker implements Parkable {
 
     public SmartParkingBoy(ParkingLot... parkingLot) {
         super(parkingLot);
     }
 
+    @Override
     public ParkingTicket parkCar(Car car) {
-        if (getParkingLots().stream().allMatch(parkingLot -> parkingLot.isFull())){
+        if(isFull()){
             throw new NotEnoughPositionException();
         }
         ParkingLot parkingLot = getParkingLots().stream().max(Comparator.comparingInt(ParkingLot::getRestPosition)).get();

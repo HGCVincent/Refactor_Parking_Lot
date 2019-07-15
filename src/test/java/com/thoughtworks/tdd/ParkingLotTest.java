@@ -134,12 +134,12 @@ public class ParkingLotTest {
     public void should_park_and_fetch_car_when_manage_specify_parkingBoy() {
         ParkingLot parkingLot = new ParkingLot(1);
         ParkingLotManager parkingLotManager = new ParkingLotManager(parkingLot);
-        ParkingBoy smartParkingBoy = new SmartParkingBoy();
+        Paker smartParkingBoy = new SmartParkingBoy();
         smartParkingBoy.addParkingLot(parkingLot);
         parkingLotManager.addParkingBoy(smartParkingBoy);
 
         Car car = new Car();
-        ParkingTicket ticket = parkingLotManager.parkingCar(car);
+        ParkingTicket ticket = parkingLotManager.parkCar(car);
         Car fetchCar = smartParkingBoy.fetchCar(ticket);
 
         Assertions.assertSame(car, fetchCar);

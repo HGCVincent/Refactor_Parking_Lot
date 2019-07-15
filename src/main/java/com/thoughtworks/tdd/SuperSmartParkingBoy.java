@@ -2,12 +2,13 @@ package com.thoughtworks.tdd;
 
 import java.util.Comparator;
 
-public class SuperSmartParkingBoy extends Paker {
+public class SuperSmartParkingBoy extends Paker implements Parkable{
 
     public SuperSmartParkingBoy(ParkingLot... parkingLot) {
         super(parkingLot);
     }
 
+    @Override
     public ParkingTicket parkCar(Car car) {
         if (getParkingLots().stream().allMatch(parkingLot -> parkingLot.isFull())){
             throw new NotEnoughPositionException();
