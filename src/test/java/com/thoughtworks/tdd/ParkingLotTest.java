@@ -19,114 +19,93 @@ public class ParkingLotTest {
 
     @Test
     public void should_return_fetch_right_car_when_park_multiple_cars(){
-        //given
         Car car1 = new Car();
         Car car2 = new Car();
         ParkingLot parkingLot =  new ParkingLot(2);
 
-        //when
         ParkingTicket ticket1 = parkingLot.park(car1);
         ParkingTicket ticket2 = parkingLot.park(car2);
         Car fetchCar1 = parkingLot.fetch(ticket1);
         Car fetchCar2 = parkingLot.fetch(ticket2);
 
-        //then
         assertSame(car1,fetchCar1);
         assertSame(car2,fetchCar2);
     }
 
     @Test
     public void should_return_no_car_when_parking_boy_park_car_given_no_ticket(){
-        //given
         Car car = new Car();
         ParkingLot parkingLot =  new ParkingLot(1);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
 
-        //when
         parkingBoy.parkCar(car);
 
-        //then
         Assertions.assertThrows(MissingParkingTicketException.class,() -> parkingBoy.fetchCar(null));
     }
 
     @Test
     public void should_return_no_car_when_parking_boy_fetch_car_given_used_ticket(){
-        //given
         Car car = new Car();
         ParkingLot parkingLot =  new ParkingLot(1);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
 
-        //when
         ParkingTicket ticket = parkingBoy.parkCar(car);
         parkingBoy.fetchCar(ticket);
 
-        //then
         Assertions.assertThrows(UnrecognizedParkingTicketException.class,() -> parkingBoy.fetchCar(ticket));
     }
 
     @Test
     public void should_return_no_ticket_when_parking_boy_park_car_given_parking_lot_is_full(){
-        //given
         Car car1 = new Car();
         Car car2 = new Car();
         ParkingLot parkingLot =  new ParkingLot(1);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
 
-        //when
         parkingBoy.parkCar(car1);
 
-        //then
         Assertions.assertThrows(NotEnoughPositionException.class,() -> parkingBoy.parkCar(car2));
     }
 
     @Test
     public void should_park_the_car_to_second_parking_lot_when_parking_boy_park_car_given_two_parking_lot_and_the_first_parking_lot_is_full(){
-        //given
         ParkingLot parkingLot1 = new ParkingLot(1);
         ParkingLot parkingLot2 = new ParkingLot(1);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot1,parkingLot2);
         Car car1 = new Car();
         Car car2 = new Car();
 
-        //when
         parkingBoy.parkCar(car1);
         ParkingTicket ticket = parkingBoy.parkCar(car2);
 
-        //then
         assertSame(true,parkingLot2.getTiketsAndCar().containsKey(ticket));
     }
 
     @Test
     public void should_park_the_car_to_second_parking_lot_when_smart_parking_boy_park_car_given_two_parking_lot_and_the_second_parking_lot_has_more_empty_position(){
-        //given
         ParkingLot parkingLot1 = new ParkingLot(1);
         ParkingLot parkingLot2 = new ParkingLot(1);
         SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot1,parkingLot2);
         Car car1 = new Car();
         Car car2 = new Car();
 
-        //when
         smartParkingBoy.parkCar(car1);
         ParkingTicket ticket = smartParkingBoy.parkCar(car2);
 
-        //then
         assertSame(true,parkingLot2.getTiketsAndCar().containsKey(ticket));
     }
 
     @Test
     public void should_park_the_car_to_second_parking_lot_when_super_smart_parking_boy_park_car_given_two_parking_lot_and_the_second_parking_lot_has_larger_vailable_position_rate(){
-        //given
         ParkingLot parkingLot1 = new ParkingLot(1);
         ParkingLot parkingLot2 = new ParkingLot(1);
         SuperSmartParkingBoy smartParkingBoy = new SuperSmartParkingBoy(parkingLot1,parkingLot2);
         Car car1 = new Car();
         Car car2 = new Car();
 
-        //when
         smartParkingBoy.parkCar(car1);
         ParkingTicket ticket = smartParkingBoy.parkCar(car2);
 
-        //then
         assertSame(true,parkingLot2.getTiketsAndCar().containsKey(ticket));
     }
 
